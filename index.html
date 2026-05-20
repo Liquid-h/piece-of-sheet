@@ -3,183 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grow_Your_Plants</title>
+    <title>Asset Dashboard</title>
     <style>
         body {
-            display: flex;
-            justify-content: center; /* 가로 가운데 정렬 */
-            align-items: center;     /* 세로 가운데 정렬 */
-            height: 100vh;           /* 화면 전체 높이 */
             margin: 0;
-            background-color: #121212;
-            color: #4CAF50;          /* 식물 색깔, plant color */
-            flex-direction: column;  /* 요소들을 위아래로 배치 */
-        }
-
-        .sprout-container {
-            position: relative;
+            background-color: #0f172a; /* 다크 네이비 배경 */
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 40px 20px;
         }
 
-        .word {
-            color: #ffffff;
-            position: absolute;
-            top: -30px;
-            font-family: 'Courier New', Courier, monospace;
+        h1 {
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            width: 100%;
+            max-width: 800px;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+            border-color: #38bdf8;
+        }
+
+        .symbol {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f8fafc;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .change {
+            font-size: 1rem;
             font-weight: bold;
         }
-        
-        /* 아스키 아트를 위한 설정 */
-        pre {
-            font-family: 'Courier New', Courier, monospace; /* 고정폭 글꼴 (필수: 안하면 새싹 터짐) */
-            font-size: 8px;          /* 12px에서 8px로 크기 축소 */
-            line-height: 1.1;        /* 줄 간격 좁게 */
-            text-align: left;        /* 아스키 아트 자체는 왼쪽 정렬 유지 */
-            margin: 0;
+
+        /* 등락률 색상 */
+        .up {
+            color: #4ade80; /* 초록색 (상승) */
+            text-shadow: 0 0 5px rgba(74, 222, 128, 0.4);
         }
 
-        /* 네온 초록색 버튼 스타일 */
-        button {
-            margin-top: 40px;
-            width: 140px;
-            height: 50px;
-            font-size: 16px;
-            font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #121212; /* 배경색과 동일하게 */
-            color: #4CAF50;
-            border: 2px solid #4CAF50;
-            border-radius: 8px;
-            cursor: pointer;
-            /* 네온 빛 효과 */
-            box-shadow: 0 0 10px #4CAF50, inset 0 0 5px #4CAF50;
-            text-shadow: 0 0 5px #4CAF50;
-            transition: all 0.2s ease-in-out;
+        .down {
+            color: #f87171; /* 빨간색 (하락) */
+            text-shadow: 0 0 5px rgba(248, 113, 113, 0.4);
         }
 
-        button:hover:not(:disabled) {
-            background-color: #4CAF50;
-            color: #121212;
-            box-shadow: 0 0 20px #4CAF50, inset 0 0 10px #4CAF50;
-            text-shadow: none;
-        }
-
-        button:active:not(:disabled) {
-            transform: scale(0.95);
-        }
-
-        /* 물을 이미 줬을 때(비활성화)의 스타일 */
-        button:disabled {
-            border-color: #555555;
-            color: #555555;
-            box-shadow: none;
-            text-shadow: none;
-            cursor: not-allowed;
+        .loading {
+            color: #94a3b8;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="sprout-container">
-        <div class="word" id="statusWord">hmmmmmmm......🤨</div>
-        
-<pre>
- ==============                                                                                     
- ====+=================                                                                              
- ======++==================                                                                        
- ========++====================                                                                      
- ==========+++====================                                                                  
-  ===========+++====================                                                                
-  =============++++===================                                                              
-   ==============++++==================                                                             
-   ================++++=================                                                            
-    =================++++================                                                           
-    ==================+++++===============                                                          
-    ====================++++==============                                                           
-     =====================++++=============                                                         
-      =====================+++++===========                                                         
-      =======================++++==========                                                         
-       +======================+++++========                                                         
-        ========================++++=======                                                         
-         ========================+++++====                       ===========                        
-           =======================+++++===                   ====================                   
-             =======================++++==                 ==========================               
-               ======================++++*               -==============================            
-                 ====================+++++*             ==================================          
-                       ========        ++++*           ======================================       
-                                        +++++         ==========++++++++++++++++++=============     
-                                        +++++*        ====++++++++++++++++======+++++++++++======   
-                                         *+++*       ==++++++++================================+=== 
-                                          *+++*    ++++++++=======================================  
-                                           +++** *++++++=========================================   
-                                           *******++++=========================================     
-                                           *****###*   ======================================       
-                                           *****##%      ==================================         
-                                            ****##         =============================            
-                                            ****##            =======================               
-                                            ****##                ===============                   
-                                            ****##                                                   
-                                            ****##                                                   
-                                            ****##                                                   
-                                            ****##                                                   
-                                            ****##                                                   
-                                            ****##                                                   
-                                           *****##                                                   
-                                           *****#                                                    
-                                           *****#                                                    
-                                           *****#                                                    
-                                          ******#                                                    
-                                         *******#                                                    
-</pre>
 
-        <!-- 물 주기 버튼 -->
-        <button id="waterBtn" onclick="giveWater()">Water Drop 💧</button>
+    <h1>📈 My Asset Dashboard</h1>
+
+    <!-- 코인 섹션 -->
+    <div class="section-title">🪙 Crypto (Binance Live)</div>
+    <div class="grid" id="crypto-grid">
+        <!-- 자바스크립트로 카드가 생성됩니다 -->
+    </div>
+
+    <!-- 미국 주식 섹션 -->
+    <div class="section-title">🇺🇸 US Stocks (Finnhub)</div>
+    <div class="grid" id="stock-grid">
+        <!-- 자바스크립트로 카드가 생성됩니다 -->
     </div>
 
     <script>
-        // 오늘 날짜를 'YYYY-MM-DD' 형식으로 가져오는 함수
-        function getTodayDate() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+        // ==========================================
+        // 1. 설정 (원하는 종목으로 변경하세요!)
+        // ==========================================
+        
+        // 코인 심볼 (바이낸스 기준: 종목+USDT)
+        const cryptoSymbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT'];
+        
+        // 미국 주식 심볼
+        const stockSymbols = ['AAPL', 'TSLA', 'NVDA', 'SPY'];
+        
+        // ★ 중요: 미국 주식 시세를 보려면 Finnhub 무료 API 키가 필요합니다.
+        // https://finnhub.io/ 에 가입하고 받은 API 키를 아래에 넣으세요.
+        const FINNHUB_API_KEY = '여기에_API_키를_넣으세요'; 
+
+        // ==========================================
+        // 2. UI 렌더링 함수
+        // ==========================================
+        function createCard(id, symbol, targetGrid) {
+            const grid = document.getElementById(targetGrid);
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.id = id;
+            card.innerHTML = `
+                <div class="symbol">${symbol}</div>
+                <div class="price" id="${id}-price"><span class="loading">Loading...</span></div>
+                <div class="change" id="${id}-change"></div>
+            `;
+            grid.appendChild(card);
         }
 
-        // 화면 상태 업데이트 함수
-        function updateStatus() {
-            const lastWateredDate = localStorage.getItem('lastWateredDate');
-            const today = getTodayDate();
-            const waterBtn = document.getElementById('waterBtn');
-            const statusWord = document.getElementById('statusWord');
+        function updateCard(id, price, changePercent) {
+            const priceEl = document.getElementById(`${id}-price`);
+            const changeEl = document.getElementById(`${id}-change`);
+            
+            // 가격 포맷팅 (소수점 처리)
+            const formattedPrice = parseFloat(price) < 10 ? parseFloat(price).toFixed(4) : parseFloat(price).toFixed(2);
+            priceEl.innerText = `$${formattedPrice}`;
 
-            if (lastWateredDate === today) {
-                // 오늘 이미 물을 준 경우 (버튼 비활성화)
-                waterBtn.disabled = true;
-                waterBtn.innerText = "Done! 💤";
-                statusWord.innerText = "See ya"; // 머리 위 텍스트 변경
-            } else {
-                // 오늘 물을 아직 안 준 경우
-                waterBtn.disabled = false;
-                waterBtn.innerText = "watering";
-                statusWord.innerText = "Hi";
+            // 등락률 색상 및 기호 처리
+            const isUp = parseFloat(changePercent) >= 0;
+            const sign = isUp ? '+' : '';
+            changeEl.innerText = `${sign}${parseFloat(changePercent).toFixed(2)}%`;
+            changeEl.className = `change ${isUp ? 'up' : 'down'}`;
+        }
+
+        // ==========================================
+        // 3. 데이터 가져오기 함수
+        // ==========================================
+
+        // 바이낸스 API로 코인 시세 가져오기 (무료, 키 필요 없음)
+        async function fetchCrypto() {
+            cryptoSymbols.forEach(symbol => createCard(symbol, symbol.replace('USDT', ''), 'crypto-grid'));
+
+            try {
+                for (const symbol of cryptoSymbols) {
+                    const response = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
+                    const data = await response.json();
+                    updateCard(symbol, data.lastPrice, data.priceChangePercent);
+                }
+            } catch (error) {
+                console.error("데이터를 불러오는데 실패했습니다.", error);
             }
         }
 
-        // 물 주기 버튼 클릭 시 실행되는 함수
-        function giveWater() {
-            const today = getTodayDate();
-            
-            // 오늘 날짜를 저장소에 기록
-            localStorage.setItem('lastWateredDate', today);
-            
-            // 버튼 상태 즉시 업데이트
-            updateStatus();
+        // Finnhub API로 미국 주식 시세 가져오기
+        async function fetchStocks() {
+            stockSymbols.forEach(symbol => createCard(symbol, symbol, 'stock-grid'));
+
+            if (FINNHUB_API_KEY === '여기에_API_키를_넣으세요') {
+                stockSymbols.forEach(symbol => {
+                    document.getElementById(`${symbol}-price`).innerHTML = `<span class="loading" style="color:#f87171; font-size:12px;">API 키를 입력해주세요</span>`;
+                });
+                return;
+            }
+
+            try {
+                for (const symbol of stockSymbols) {
+                    const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`);
+                    const data = await response.json();
+                    
+                    if (data.c) {
+                        const currentPrice = data.c;
+                        const previousClose = data.pc;
+                        const changePercent = ((currentPrice - previousClose) / previousClose) * 100;
+                        updateCard(symbol, currentPrice, changePercent);
+                    }
+                }
+            } catch (error) {
+                console.error("데이터를 불러오는데 실패했습니다.", error);
+            }
         }
 
-        // 웹페이지가 처음 켜질 때 상태 확인
-        window.onload = updateStatus;
+        // 실행
+        fetchCrypto();
+        fetchStocks();
+        
+        // 코인은 10초마다 자동 새로고침 (바이낸스는 호출 제한이 널널함)
+        setInterval(fetchCrypto, 10000);
     </script>
 </body>
 </html>
